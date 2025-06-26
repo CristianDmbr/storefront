@@ -1,7 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import RatingForm
 
-
-
-def sayHello(request):
-    return render(request, 'hello.html',{'name':'Mosh'})  
+def index(request):
+    if request.method == 'POST':
+        form = RatingForm(request.POST or None)
+        if form.is_valid():
+            form.save()
+        else:
+            return render(request, 'index.html',{'form':form})
+    
+    context = {'form' : RatingForm()}
+    return render (request, 'index.html', context)

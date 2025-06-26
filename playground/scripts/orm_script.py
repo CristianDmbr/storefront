@@ -4,5 +4,10 @@ from django.utils import timezone
 from django.db import connection
 
 def run():
+    user = User.objects.first()
     restaurant = Restaurant.objects.first()
-    print(restaurant.sales.all())
+
+    rating = Rating.objects.create(user = user, restaurant = restaurant, rating = 9)
+
+    rating.full_clean()
+    rating.save()
