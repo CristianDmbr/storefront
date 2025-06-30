@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
+
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=6,decimal_places=2)
@@ -25,6 +27,11 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        print(self._state.adding)
+        super().save(*args, **kwargs)
+
 
 # Create a ratings model for storing different user ratings for restaurants
 # Its going to store a reference to the user who made the rating and the restaurant which the rating applies to
