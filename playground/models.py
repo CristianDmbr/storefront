@@ -16,7 +16,7 @@ class Restaurant(models.Model):
         ITALIAN = 'IT', 'Italian'
         OTHER = 'OT', 'Other'
 
-
+ 
 
     name = models.CharField(max_length=100)
     website = models.URLField(default='')

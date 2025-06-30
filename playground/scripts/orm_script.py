@@ -5,6 +5,9 @@ from django.db import connection
 
 def run():
     restaurant = Restaurant.objects.first()
+    print(restaurant.pk)
+    print(restaurant.rating.all())
+    restaurant.delete()
+    
 
-    restaurant.name = 'New Restaurant Name'
-    restaurant.save(update_fields = ['name'])
+    print(connection.queries) 
