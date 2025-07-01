@@ -1,13 +1,12 @@
-from playground.models import Restaurant
+from playground.models import Restaurant, Rating, Sale
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import connection
+from django.db.models.functions import Lower
 
 def run():
-    restaurant = Restaurant.objects.first()
-    print(restaurant.pk)
-    print(restaurant.rating.all())
-    restaurant.delete()
-    
 
-    print(connection.queries) 
+    restaurants = Restaurant.objects.order_by(Lower('name'))
+    print(restaurants)
+     
+    print(connection.queries)
