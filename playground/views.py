@@ -16,4 +16,4 @@ def index(request):
     print(restaurants)
 
     
-    return render(request, 'index.html')
+    return render(request, 'index.html') 
