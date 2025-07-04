@@ -3,16 +3,10 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import connection
 from django.db.models.functions import Lower
+import random
+from django.db.models.functions import Upper
+
 
 def run():
-    staff, created = Staff.objects.get_or_create(name = "John Wich")
-    restaurant = Restaurant.objects.first()
-    restaurant2 = Restaurant.objects.last()
-    
-    StaffRestaurant.objects.create(
-        staff = staff, restaurant = restaurant, salary = 28000
-    )
-
-    StaffRestaurant.objects.create(
-        staff = staff, restaurant = restaurant2, salary = 30000
-    )
+    restaurants = Restaurant.objects.values_list('name','dataOpened')
+    print(restaurants)
