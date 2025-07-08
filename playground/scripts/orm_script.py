@@ -9,4 +9,8 @@ from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When,
 
 
 def run():
-    rating = Rating.objects.filter(rating = 3).first()
+    sales = Sale.objects.all()
+
+    for sale in sales:
+        sale.expenditure = random.uniform(5,100)
+        sale.save()
