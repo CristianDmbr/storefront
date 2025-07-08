@@ -4,10 +4,9 @@ from django.utils import timezone
 from django.db import connection
 from django.db.models.functions import Lower, Length
 import random
-from django.db.models.functions import Upper
-from django.db.models import Count, Avg, Min, Max
+from django.db.models.functions import Upper, Length, Concat
+from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When, Sum, F
 
 
 def run():
-    # Fetch all restaurants and want to get the number of characters in the name of the restaurant. e.g. 'xyz' == 3
-    
+    rating = Rating.objects.filter(rating = 3).first()
