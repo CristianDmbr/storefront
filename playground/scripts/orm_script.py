@@ -9,12 +9,7 @@ from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When,
 
 
 def run():
-    rating = Rating.objects.first()
-    print(rating.rating)
-    rating.rating = F('rating') + 1
-    rating.save()
+    itOrMex = Q(name__icontaints = "italian") | Q(name_icontains = "mexican")
+    notRecentlyOpened = ~Q(dataOpened__gt = timezone.now() - timezone.timedelta(days = 40))
 
-    rating.refresh_from_db()
-
-    
-    print(rating.rating)
+    restaurants = Restaurant.objects.filter(itOrMex | notRecentlyOpened)
