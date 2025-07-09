@@ -5,12 +5,16 @@ from django.db import connection
 from django.db.models.functions import Lower, Length
 import random
 from django.db.models.functions import Upper, Length, Concat
-from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When, Sum, F
+from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When, Sum, F, Q
 
 
 def run():
-    sales = Sale.objects.all()
+    rating = Rating.objects.first()
+    print(rating.rating)
+    rating.rating = F('rating') + 1
+    rating.save()
 
-    for sale in sales:
-        sale.expenditure = random.uniform(5,100)
-        sale.save()
+    rating.refresh_from_db()
+
+    
+    print(rating.rating)
