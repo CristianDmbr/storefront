@@ -24,7 +24,10 @@ class Restaurant(models.Model):
     dataOpened = models.DateField()
     latitute = models.FloatField()
     longitute = models.FloatField()
-    restaurant_type = models.CharField(max_length=2, choices = TypeChoices.choices )
+    restaurant_type = models.CharField(max_length=2, choices = TypeChoices.choices)
+    capacity = models.PositiveSmallIntegerField(null = True, blank = True)
+    nicknamge = models.CharField(max_length = 200, null = True, blank = True)
+
 
     class Meta:
         ordering = [Lower('name')]
