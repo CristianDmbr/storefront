@@ -5,7 +5,7 @@ from django.db import connection
 from django.db.models.functions import Lower, Length
 import random
 from django.db.models.functions import Upper, Length, Concat, Coalesce
-from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When, Sum, F, Q
+from django.db.models import Count, Avg, Min, Max, CharField, Value, Case, When, Sum, F, Q, OuterRef, Subquery 
 
 
 def run():
