@@ -4,6 +4,13 @@ from django.db.models import Sum, Prefetch
 from django.utils import timezone
 from .forms import ProductOrderForm
 from django.db import transaction
+from functools import partial
+
+def email_user(email):
+    print(f'Dear {email}, Thank you for your order.')
+
+def greet(name, surname):
+    print(f'Hello {name} {surname} welcome!')
 
 def index(request):
     jobs = StaffRestaurant.objects.prefetch_related('restaurant','staff')
@@ -22,6 +29,8 @@ def order_product(request):
                 order = form.save()
                 order.product.numberInStock -= order.numberOfItems
                 order.product.save()
+            
+            transaction.on_commit(partial(greet,'Cristian','Dumbravanu'))
 
             return redirect('order-product')
         else:
