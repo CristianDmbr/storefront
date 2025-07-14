@@ -3,13 +3,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.functions import Lower
 
-
-
-class Product(models.Model):
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=6,decimal_places=2)
-    country = models.CharField(max_length=100)
-
 class Restaurant(models.Model):
     class TypeChoices(models.TextChoices):
         INDIAN = 'IN','Indian'
@@ -73,3 +66,17 @@ class Sale(models.Model):
     income = models.DecimalField(max_digits=8,decimal_places=2)
     expenditure = models.DecimalField(max_digits = 8, decimal_places = 2)
     dateTime = models.DateTimeField()
+
+class Product(models.Model):
+    name = models.CharField(max_length=100)
+    numberInStock = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.name
+
+class Order(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    numberOfItems = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return f'{self.numberOfItems} x {self.product.name}'
