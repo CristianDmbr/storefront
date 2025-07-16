@@ -10,11 +10,11 @@ from django.contrib.contenttypes.models import ContentType
 
 
 def run():
-    restaurant = Restaurant.objects.get(pk=3)
-    comments = restaurant.comments.all()
+    user = User.objects.first()
+    restaurant = Restaurant.objects.first()
 
-    for comment in comments:
-        print(comment.text)
-    
-    lastComment = restaurant.comments.last()
-    restaurant.comments.remove(lastComment)
+    rating = Rating.objects.create(
+        restaurant = restaurant,
+        user = user,
+        rating = 12412
+    )

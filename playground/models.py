@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.functions import Lower
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.db.models import Q
 
 class Restaurant(models.Model):
     class TypeChoices(models.TextChoices):
@@ -58,12 +59,20 @@ class Rating(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, on_delete = models.CASCADE, related_name = 'ratings')
     rating = models.PositiveSmallIntegerField(
-        validators = [MinValueValidator(1), MaxValueValidator(5)]
+        validators = [MinValueValidator(1), MaxValueValidator(10)]
     )
     comments = GenericRelation("Comment")
 
     def __str__(self):
          return f"Rating : {self.rating}"
+        
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                name = 'rating_value_valid',
+                check = Q(rating__gte = 1, rating__lte = 10)
+            )
+        ]
 
 class Sale(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.SET_NULL, null = True, related_name = 'sales')
