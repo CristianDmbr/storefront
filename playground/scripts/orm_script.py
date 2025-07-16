@@ -1,4 +1,4 @@
-from playground.models import Restaurant, Rating, Sale, Staff, StaffRestaurant
+from playground.models import Restaurant, Rating, Sale, Staff, StaffRestaurant, Comment
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import connection
@@ -10,18 +10,11 @@ from django.contrib.contenttypes.models import ContentType
 
 
 def run():
-    allContentTypes = ContentType.objects.all()
+    restaurant = Restaurant.objects.get(pk=3)
+    comments = restaurant.comments.all()
 
-    content_types = ContentType.objects.filter(app_label = 'playground')
+    for comment in comments:
+        print(comment.text)
     
-
-    content = ContentType.objects.get(
-        app_label = 'playground', model = 'restaurant'
-    )
-
-    restaurantModel = content.model_class()
-    print(restaurantModel.objects.all())
-
-    specificRestaurant = content.get_object_for_this_type(name = 'Golden Dragon')
-    print(specificRestaurant)
-    print(specificRestaurant.longitute)
+    lastComment = restaurant.comments.last()
+    restaurant.comments.remove(lastComment)

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.functions import Lower
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 
 class Restaurant(models.Model):
     class TypeChoices(models.TextChoices):
@@ -22,6 +22,7 @@ class Restaurant(models.Model):
     restaurant_type = models.CharField(max_length=2, choices = TypeChoices.choices)
     capacity = models.PositiveSmallIntegerField(null = True, blank = True)
     nicknamge = models.CharField(max_length = 200, null = True, blank = True)
+    comments = GenericRelation("Comment", related_query_name = 'restaurant')
 
 
     class Meta:
@@ -59,6 +60,7 @@ class Rating(models.Model):
     rating = models.PositiveSmallIntegerField(
         validators = [MinValueValidator(1), MaxValueValidator(5)]
     )
+    comments = GenericRelation("Comment")
 
     def __str__(self):
          return f"Rating : {self.rating}"
@@ -90,5 +92,5 @@ class DummyModel(models.Model):
 class Comment(models.Model):
     text = models.TextField()
     content_type = models.ForeignKey(ContentType, on_delete = models.CASCADE)
-    objectId = models.PositiveSmallIntegerField()
+    object_id = models.PositiveSmallIntegerField()
     content_object = GenericForeignKey('content_type','object_id')
