@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models.functions import Lower
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Restaurant(models.Model):
     class TypeChoices(models.TextChoices):
@@ -59,7 +61,7 @@ class Rating(models.Model):
     )
 
     def __str__(self):
-        return f"Rating : {self.rating}"
+         return f"Rating : {self.rating}"
 
 class Sale(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete = models.SET_NULL, null = True, related_name = 'sales')
@@ -80,3 +82,13 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.numberOfItems} x {self.product.name}'
+    
+class DummyModel(models.Model):
+    work = models.CharField(max_length=100)
+
+# Associate with many model with generic foreign key
+class Comment(models.Model):
+    text = models.TextField()
+    content_type = models.ForeignKey(ContentType, on_delete = models.CASCADE)
+    objectId = models.PositiveSmallIntegerField()
+    content_object = GenericForeignKey('content_type','object_id')
