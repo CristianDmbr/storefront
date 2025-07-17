@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Ratings List</h1>
+    {% for rating in ratings %}
+        <p>{{ rating.restaurant.name }} - {{ rating.rating }}</p>
+    {% endfor %}
+</body>
+</html>
