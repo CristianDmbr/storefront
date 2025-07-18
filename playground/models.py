@@ -22,8 +22,12 @@ class Restaurant(models.Model):
     longitute = models.FloatField()
     restaurant_type = models.CharField(max_length=2, choices = TypeChoices.choices)
     capacity = models.PositiveSmallIntegerField(null = True, blank = True)
-    nicknamge = models.CharField(max_length = 200, null = True, blank = True)
+    nickname = models.CharField(max_length = 200, default= '')
     comments = GenericRelation("Comment", related_query_name = 'restaurant')
+
+    @property
+    def restaurant_name(self):
+        return self.nickname or self.name
 
 
     class Meta:
